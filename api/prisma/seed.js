@@ -6,14 +6,14 @@ const urlBase = 'https://restcountries.com/v3.1/all'
 
 const main = async () => {
     const getCountries = await axios.get(urlBase)
-    const countriesData = getCountries.data
-
+    const countriesData =  getCountries.data       
     const formatCountries = countriesData.map(country => {
         return {
-            name:country?.name?.common,
+            name:country?.translations?.spa.common,
             flag:country?.flags?.png
         }
     })
+    console.log(formatCountries)
     try {
         const loadCountries = await prisma.country.createMany({
             data: formatCountries,
